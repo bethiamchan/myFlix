@@ -10,5 +10,151 @@
 	<body>
 		<h1>myFlix Documentation</h1>
 		<p>This app will give user access to information about movies, directors, and genres. Users can sign up, update their information, and create a list of their favorite movies.</p>
+	
+		<table>
+			<tr>
+				<th>Request</th>
+				<th>URL</th>
+				<th>HTTP Method</th>
+				<th>Request Body Format</th>
+				<th>Request Example</th>
+				<th>Response Body Format</th>
+				<th>Response Example</th>
+			</tr>
+			<tr>
+				<td>Get a list of all movies</td>
+				<td>/movies</td>
+				<td>GET</td>
+				<td>None</td>
+				<td>/movies</td>
+				<td>JSON</td>
+				<td>{
+					<br>"Title": "Emma",
+					<br>"Director": "Autumn de Wilde",
+					<br>"Genre": ["Comedy", "Drama", "Romance"],
+					<br>"Released": 2020,
+					<br>"Starring": ["Anya Taylor-Joy", "Mia Goth", "Johnny Flynn", "Bill Nighy"]
+					<br>}
+				</td>
+			</tr>
+			<tr>
+				<td>Get data about a single movie by title</td>
+				<td>/movies/:title</td>
+				<td>GET</td>
+				<td>None</td>
+				<td>/movies/Emma</td>
+				<td>JSON</td>
+				<td>{
+					<br>"Title": "Emma",
+					<br>"Director": "Autumn de Wilde",
+					<br>"Genre": ["Comedy", "Drama", "Romance"],
+					<br>"Released": 2020,
+					<br>"Starring": ["Anya Taylor-Joy", "Mia Goth", "Johnny Flynn", "Bill Nighy"]
+					<br>}
+				</td>
+			</tr>
+			<tr>
+				<td>Get data about a genre by genre name</td>
+				<td>/movies/genres/:genre</td>
+				<td>GET</td>
+				<td>None</td>
+				<td>/movies/genres/Comedy</td>
+				<td>JSON</td>
+				<td>{
+					<br>“Genre”: “Comedy”,
+					<br>“Description”: “Tells a story of funny events. Meant to make you laugh.”
+					<br>}
+				</td>
+			</tr>
+			<tr>
+				<td>Get data about a director by name</td>
+				<td>/movies/directors/:name</td>
+				<td>GET</td>
+				<td>None</td>
+				<td>/movies/directors/Greta%20Gerwig</td>
+				<td>JSON</td>
+				<td>{
+					<br>“Name”: “Greta Gerwig”,
+					<br>“Bio”: “Greta Gerwig is an American actress, playwright, screenwriter, and director.”,
+					<br>“Birth Year”: “1983”,
+					<br>“Death Year”: “N/A”
+					<br>}
+				</td>
+			</tr>
+			<tr>
+				<td>Register as new user</td>
+				<td>/users</td>
+				<td>POST</td>
+				<td>JSON</td>
+				<td>{
+					<br>“Username”: “myusername”,
+					<br>“Password”: “myPassword123”,
+					<br>“Email”: myname@sample.com
+					<br>}
+				</td>
+				<td>JSON</td>
+				<td>{
+					<br>“Username”: “myusername”,
+					<br>“Password”: “myPassword123”,
+					<br>“Email”: myname@sample.com
+					<br>}
+				</td>
+			</tr>
+			<tr>
+				<td>User updates their user information</td>
+				<td>/users/:username</td>
+				<td>PUT</td>
+				<td>JSON</td>
+				<td>{
+					<br>“Username”: “mynewusername”,
+					<br>“Password”: “myNewPassword123”,
+					<br>“Email”: myothername@sample.com
+					<br>}
+				</td>
+				<td>JSON</td>
+				<td>{
+					<br>“Username”: “mynewusername”,
+					<br>“Password”: “myNewPassword123”,
+					<br>“Email”: myothername@sample.com
+					<br>}</td>
+			</tr>
+			<tr>
+				<td>User adds movie to list of favorites</td>
+				<td>/users/:username/movies/:movieID</td>
+				<td>POST</td>
+				<td>JSON</td>
+				<td>{
+					<br>"Favorite Movies": "87cf4ea5"
+					<br>}
+				</td>
+				<td>JSON</td>
+				<td>{
+					<br>"Favorite Movies": "87cf4ea5"
+					<br>}
+				</td>
+			</tr>
+			<tr>
+				<td>User removes movie from list of favorites</td>
+				<td>/users/:username/movies/:movieID</td>
+				<td>DELETE</td>
+				<td>None</td>
+				<td>/users/myusername/movies/87cf4ea5</td>
+				<td>Message</td>
+				<td>“Ladies in Black was removed from your favorites.”</td>
+			</tr>
+			<tr>
+				<td>Existing user deregisters</td>
+				<td>/users/:username</td>
+				<td>DELETE</td>
+				<td>None</td>
+				<td>/users/myusername</td>
+				<td>Message</td>
+				<td>“Your account has been deleted from myFlix.”</td>
+			</tr>
+		</table>
+
+		<br>
+		<p>Note: Use %20 for spaces in the URL</p>
+
 	</body>
 </html>

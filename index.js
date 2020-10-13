@@ -2,7 +2,7 @@ const express = require('express'),
     morgan = require('morgan');
 const app = express();
 
-let topMovies = [
+let movies = [
     {
         title: 'Pride and Prejudice',
         director: 'Joe Wright',
@@ -78,13 +78,45 @@ let topMovies = [
 //Log requests using Morgan middleware
 app.use(morgan('common'));
 
-//GET requests
-app.get('/movies', (req, res) => {
-    res.json(topMovies);
+//Requests
+app.get('/', (req, res) => {
+    res.send('Welcome to myFlix!');
 });
 
-app.get('/', (req, res) => {
-    res.send('Welcome to my movie club!');
+app.get('/movies', (req, res) => {
+	res.json(movies);
+});
+
+app.get('/movies/:title', (req, res) => {
+    res.send('Successful GET request returning information about a movie based on title.');
+});
+
+app.get('/movies/genres/:genre', (req, res) => {
+	res.send('Successful GET request returning information about a genre based on genre name.');
+});
+
+app.get('/movies/directors/:name', (req, res) => {
+	res.send('Successful GET request returning information about a director based on name.');
+});
+
+app.post('/users', (req, res) => {
+	res.send('Successful POST request registering a new user.');
+});
+
+app.put('/users/:username', (req, res) => {
+	res.send('Successful PUT request updating a user\'s information.');
+});
+
+app.post('/users/:username/movies/:movieID', (req, res) => {
+	res.send('Successful POST request adding a movie to user\'s favorites.');
+});
+
+app.delete('/users/:username/movies/:movieID', (req, res) => {
+	res.send('Successful DELETE request removing a movie from user\'s favorites.');
+});
+
+app.delete('/users/:username', (req, res) => {
+	res.send('Successful DELETE request deregistering a user.');
 });
 
 app.use(express.static('public'));
