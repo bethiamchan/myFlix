@@ -10,7 +10,7 @@
 	<body>
 		<h1>myFlix Documentation</h1>
 		<p>This app will give user access to information about movies, directors, and genres. Users can sign up, update their information, and create a list of their favorite movies.</p>
-	
+
 		<table>
 			<tr>
 				<th>Request</th>
@@ -27,14 +27,17 @@
 				<td>GET</td>
 				<td>None</td>
 				<td>/movies</td>
-				<td>JSON</td>
-				<td>{
+				<td>JSON object with data about all movies</td>
+				<td>[
+					<br>{
 					<br>"Title": "Emma",
 					<br>"Director": "Autumn de Wilde",
 					<br>"Genre": ["Comedy", "Drama", "Romance"],
 					<br>"Released": 2020,
 					<br>"Starring": ["Anya Taylor-Joy", "Mia Goth", "Johnny Flynn", "Bill Nighy"]
 					<br>}
+					<br>...
+					<br>]
 				</td>
 			</tr>
 			<tr>
@@ -43,7 +46,7 @@
 				<td>GET</td>
 				<td>None</td>
 				<td>/movies/Emma</td>
-				<td>JSON</td>
+				<td>JSON object with data about a single movie</td>
 				<td>{
 					<br>"Title": "Emma",
 					<br>"Director": "Autumn de Wilde",
@@ -59,7 +62,7 @@
 				<td>GET</td>
 				<td>None</td>
 				<td>/movies/genres/Comedy</td>
-				<td>JSON</td>
+				<td>JSON object with data about a single genre</td>
 				<td>{
 					<br>“Genre”: “Comedy”,
 					<br>“Description”: “Tells a story of funny events. Meant to make you laugh.”
@@ -72,7 +75,7 @@
 				<td>GET</td>
 				<td>None</td>
 				<td>/movies/directors/Greta%20Gerwig</td>
-				<td>JSON</td>
+				<td>JSON object with data about a single director</td>
 				<td>{
 					<br>“Name”: “Greta Gerwig”,
 					<br>“Bio”: “Greta Gerwig is an American actress, playwright, screenwriter, and director.”,
@@ -92,7 +95,7 @@
 					<br>“Email”: myname@sample.com
 					<br>}
 				</td>
-				<td>JSON</td>
+				<td>JSON object with data about user</td>
 				<td>{
 					<br>“Username”: “myusername”,
 					<br>“Password”: “myPassword123”,
@@ -111,7 +114,7 @@
 					<br>“Email”: myothername@sample.com
 					<br>}
 				</td>
-				<td>JSON</td>
+				<td>JSON object with data about user</td>
 				<td>{
 					<br>“Username”: “mynewusername”,
 					<br>“Password”: “myNewPassword123”,
@@ -127,7 +130,7 @@
 					<br>"Favorite Movies": "87cf4ea5"
 					<br>}
 				</td>
-				<td>JSON</td>
+				<td>JSON object with data about movie that was added to favorites</td>
 				<td>{
 					<br>"Favorite Movies": "87cf4ea5"
 					<br>}
@@ -139,7 +142,7 @@
 				<td>DELETE</td>
 				<td>None</td>
 				<td>/users/myusername/movies/87cf4ea5</td>
-				<td>Message</td>
+				<td>Message indicating movie was removed successfully</td>
 				<td>“Ladies in Black was removed from your favorites.”</td>
 			</tr>
 			<tr>
@@ -148,7 +151,7 @@
 				<td>DELETE</td>
 				<td>None</td>
 				<td>/users/myusername</td>
-				<td>Message</td>
+				<td>Message indicating account has been deleted</td>
 				<td>“Your account has been deleted from myFlix.”</td>
 			</tr>
 		</table>
