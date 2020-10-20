@@ -30,57 +30,74 @@
 				<td>JSON object with data about all movies</td>
 				<td>[
 					<br>{
-					<br>"Title": "Emma",
-					<br>"Director": "Autumn de Wilde",
-					<br>"Genre": ["Comedy", "Drama", "Romance"],
-					<br>"Released": 2020,
-					<br>"Starring": ["Anya Taylor-Joy", "Mia Goth", "Johnny Flynn", "Bill Nighy"]
-					<br>}
+					<br>"Genre": {
+					<br>"Name": "Adventure",
+					<br>"Description": "Should contain numerous consecutive and inter-related scenes of characters participating in hazardous or exciting experiences for a specific goal. Often include searches or expeditions for lost continents and exotic locales, characters embarking in treasure hunt or heroic journeys, travels, and quests for the unknown."
+					<br>},
+					<br>"Director": {
+					<br>"Name": "John Lasseter",
+					<br>"Bio": "John Alan Lasseter is an American animator, film director, screenwriter, producer, voice actor and former chief creative officer of Walt Disney Animation Studios, Pixar and Disneytoon Studios. He was also the Principal Creative Advisor for Walt Disney Imagineering.",
+					<br>"Birth": "1957"
+					<br>},
+					<br>"_id": "5f88b65284a8c1a9e666a6cf",
+					<br>"Title": "Toy Story",
+					<br>"Description": "A cowboy doll is profoundly threatened and jealous when a new spaceman figure supplants him as top toy in a boy's room.",
+					<br>"ImagePath": "https://m.media-amazon.com/images/M/MV5BMDU2ZWJlMjktMTRhMy00ZTA5LWEzNDgtYmNmZTEwZTViZWJkXkEyXkFqcGdeQXVyNDQ2OTk4MzI@._V1_UX182_CR0,0,182,268_AL_.jpg",
+					<br>"Featured": true,
+					<br>},
 					<br>...
 					<br>]
 				</td>
 			</tr>
 			<tr>
 				<td>Get data about a single movie by title</td>
-				<td>/movies/:title</td>
+				<td>/movies/:Title</td>
 				<td>GET</td>
 				<td>None</td>
-				<td>/movies/Emma</td>
+				<td>/movies/Mulan</td>
 				<td>JSON object with data about a single movie</td>
 				<td>{
-					<br>"Title": "Emma",
-					<br>"Director": "Autumn de Wilde",
-					<br>"Genre": ["Comedy", "Drama", "Romance"],
-					<br>"Released": 2020,
-					<br>"Starring": ["Anya Taylor-Joy", "Mia Goth", "Johnny Flynn", "Bill Nighy"]
+					<br>"Genre": {
+					<br>"Name": "Adventure",
+					<br>"Description": "Should contain numerous consecutive and inter-related scenes of characters participating in hazardous or exciting experiences for a specific goal. Often include searches or expeditions for lost continents and exotic locales, characters embarking in treasure hunt or heroic journeys, travels, and quests for the unknown."
+					<br>},
+					<br>"Director": {
+					<br>"Name": "Tony Bancroft",
+					<br>"Bio": "Tony Bancroft is an American animator and film director who frequently collaborates with Disney.",
+					<br>"Birth": "1967"
+					<br>},
+					<br>"_id": "5f88b65284a8c1a9e666a6d3",
+					<br>"Title": "Mulan",
+					<br>"Description": "To save her father from death in the army, a young maiden secretly goes in his place and becomes one of China's greatest heroines in the process.",
+					<br>"ImagePath": "https://m.media-amazon.com/images/M/MV5BODkxNGQ1NWYtNzg0Ny00Yjg3LThmZTItMjE2YjhmZTQ0ODY5XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg",
+					<br>"Featured": treasure
 					<br>}
 				</td>
 			</tr>
 			<tr>
 				<td>Get data about a genre by genre name</td>
-				<td>/movies/genres/:genre</td>
+				<td>/movies/genres/:Genre</td>
 				<td>GET</td>
 				<td>None</td>
 				<td>/movies/genres/Comedy</td>
 				<td>JSON object with data about a single genre</td>
 				<td>{
-					<br>“Genre”: “Comedy”,
-					<br>“Description”: “Tells a story of funny events. Meant to make you laugh.”
+					<br>"Name": "Comedy",
+					<br>"Description": "Virtually all scenes should contain characters participating in humorous or comedic experiences. The comedy can be exclusively for the viewer, at the expense of the characters in the title, or be shared with them."
 					<br>}
 				</td>
 			</tr>
 			<tr>
 				<td>Get data about a director by name</td>
-				<td>/movies/directors/:name</td>
+				<td>/movies/directors/:Name</td>
 				<td>GET</td>
 				<td>None</td>
-				<td>/movies/directors/Greta%20Gerwig</td>
+				<td>/movies/directors/Nancy%20Meyers</td>
 				<td>JSON object with data about a single director</td>
 				<td>{
-					<br>“Name”: “Greta Gerwig”,
-					<br>“Bio”: “Greta Gerwig is an American actress, playwright, screenwriter, and director.”,
-					<br>“Birth Year”: “1983”,
-					<br>“Death Year”: “N/A”
+					<br>"Name": "Nancy Meyers",
+					<br>"Bio": "Nancy Jane Meyers is an American filmmaker. She is known as the writer, producer, and director of numerous critically and commercially successful romantic comedy films.",
+					<br>"Birth": "1949"
 					<br>}
 				</td>
 			</tr>
@@ -88,71 +105,97 @@
 				<td>Register as new user</td>
 				<td>/users</td>
 				<td>POST</td>
-				<td>JSON</td>
+				<td>JSON object with new user details</td>
 				<td>{
-					<br>“Username”: “myusername”,
-					<br>“Password”: “myPassword123”,
-					<br>“Email”: myname@sample.com
+					<br>"Username": "SimonC",
+					<br>"Password": "TNsE4n",
+					<br>"Email": "simon@sample.com",
+					<br>"Birthday": "1980-03-22",
 					<br>}
 				</td>
-				<td>JSON object with data about user</td>
+				<td>JSON object with data about added user</td>
 				<td>{
-					<br>“Username”: “myusername”,
-					<br>“Password”: “myPassword123”,
-					<br>“Email”: myname@sample.com
+					<br>"FavoriteMovies": [],
+					<br>"_id": "5f8f2aa856752b2a284e2587",
+					<br>"Username": "SimonC",
+					<br>"Password": "TNsE4n",
+					<br>"Email": "simon@sample.com",
+					<br>"Birthday": "1980-03-22T06:00:00.000Z",
 					<br>}
 				</td>
 			</tr>
 			<tr>
 				<td>User updates their user information</td>
-				<td>/users/:username</td>
+				<td>/users/:Username</td>
 				<td>PUT</td>
-				<td>JSON</td>
+				<td>JSON object with updated user details</td>
 				<td>{
-					<br>“Username”: “mynewusername”,
-					<br>“Password”: “myNewPassword123”,
-					<br>“Email”: myothername@sample.com
+					<br>"Username": "CamillaL",
+					<br>"Password": "u6pRbJ",
+					<br>"Email": "camilla@sample.com",
+					<br>"Birthday": "2001-10-12"
 					<br>}
 				</td>
-				<td>JSON object with data about user</td>
+				<td>JSON object with data about updated user</td>
 				<td>{
-					<br>“Username”: “mynewusername”,
-					<br>“Password”: “myNewPassword123”,
-					<br>“Email”: myothername@sample.com
-					<br>}</td>
+					<br>"FavoriteMovies": ["5f88b65284a8c1a9e666a6d3"],
+					<br>"_id": "5f88b80584a8c1a9e666a6da",
+					<br>"Username": "CamillaL",
+					<br>"Password": "u6pRbJ",
+					<br>"Email": "camilla@sample.com",
+					<br>"Birthday": "2001-10-12T00:00:00.000Z"
+					<br>}
+				</td>
 			</tr>
 			<tr>
 				<td>User adds movie to list of favorites</td>
-				<td>/users/:username/movies/:movieID</td>
+				<td>/users/:Username/movies/:MovieID</td>
 				<td>POST</td>
-				<td>JSON</td>
+				<td>None</td>
+				<td>/users/AndersonK/movies/5f88b65784a8c1a9e666a6d8</td>
+				<td>JSON object with user data including movie ID that was added to favorites</td>
 				<td>{
-					<br>"Favorite Movies": "87cf4ea5"
-					<br>}
-				</td>
-				<td>JSON object with data about movie that was added to favorites</td>
-				<td>{
-					<br>"Favorite Movies": "87cf4ea5"
+					<br>"FavoriteMovies": [
+					<br>"5f88b65284a8c1a9e666a6cf",
+					<br>"5f88b65284a8c1a9e666a6d2",
+					<br>"5f88b65784a8c1a9e666a6d8"
+					<br>],
+					<br>"_id": "5f88b80584a8c1a9e666a6db",
+					<br>"Username": "AndersonK",
+					<br>"Password": "JUrQZa",
+					<br>"Email": "anderson@sample.com",
+					<br>"Birthday": "1995-06-27T00:00:00.000Z"
 					<br>}
 				</td>
 			</tr>
 			<tr>
 				<td>User removes movie from list of favorites</td>
-				<td>/users/:username/movies/:movieID</td>
+				<td>/users/:Username/movies/:MovieID</td>
 				<td>DELETE</td>
 				<td>None</td>
-				<td>/users/myusername/movies/87cf4ea5</td>
-				<td>Message indicating movie was removed successfully</td>
-				<td>“Ladies in Black was removed from your favorites.”</td>
+				<td>/users/AndersonK/movies/5f88b65784a8c1a9e666a6d8</td>
+				<td>JSON object with user data showing movie ID that was removed from favorites has been removed</td>
+				<td>{
+					<br>"FavoriteMovies": [
+					<br>"5f88b65284a8c1a9e666a6cf",
+					<br>"5f88b65284a8c1a9e666a6d2",
+					<br>],
+					<br>"_id": "5f88b80584a8c1a9e666a6db",
+					<br>"Username": "AndersonK",
+					<br>"Password": "JUrQZa",
+					<br>"Email": "anderson@sample.com",
+					<br>"Birthday": "1995-06-27T00:00:00.000Z"
+					<br>}
+				</td>
 			</tr>
 			<tr>
 				<td>Existing user deregisters</td>
-				<td>/users/:username</td>
+				<td>/users/:Username</td>
 				<td>DELETE</td>
 				<td>None</td>
-				<td>/users/myusername</td>
-				<td>Message indicating account has been deleted</td>
-				<td>“Your account has been deleted from myFlix.”</td>
+				<td>/users/SimonC</td>
+				<td>Message indicating account has been deleted or was not found</td>
+				<td>"SimonC was deleted."</td>
 			</tr>
 		</table>
 
