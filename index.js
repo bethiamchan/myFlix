@@ -1,131 +1,203 @@
+const bodyParser = require('body-parser');
 const express = require('express'),
-	morgan = require('morgan');
-const app = express();
+	morgan = require('morgan'),
+	mongoose = require('mongoose'),
+	Models = require('./models.js');
 
-let movies = [
-	{
-		title: 'Pride and Prejudice',
-		director: 'Joe Wright',
-		genre: ['Drama', 'Romance'],
-		released: 2005,
-		starring: ['Keira Knightley', 'Matthew Macfadyen', 'Rosamund Pike'],
-	},
-	{
-		title: 'Emma',
-		director: 'Autumn de Wilde',
-		genre: ['Comedy', 'Drama', 'Romance'],
-		released: 2020,
-		starring: ['Anya Taylor-Joy', 'Mia Goth', 'Johnny Flynn', 'Bill Nighy'],
-	},
-	{
-		title: 'Sense and Sensibility',
-		director: 'Ang Lee',
-		genre: ['Drama', 'Romance'],
-		released: 1995,
-		starring: ['Emma Thompson', 'Kate Winslet', 'Hugh Grant', 'Alan Rickman'],
-	},
-	{
-		title: 'Love and Friendship',
-		director: 'Whit Stillman',
-		genre: ['Comedy', 'Drama', 'Romance'],
-		released: 2016,
-		starring: ['Kate Beckinsale', 'Morfydd Clark', 'Chloe Sevigny'],
-	},
-	{
-		title: 'Little Women',
-		director: 'Greta Gerwig',
-		genre: ['Drama', 'Romance'],
-		released: 2019,
-		starring: ['Saoirse Ronan', 'Emma Watson', 'Florence Pugh', 'Laura Dern', 'Timothee Chalamet', 'Meryl Streep'],
-	},
-	{
-		title: 'Enola Holmes',
-		director: 'Harry Bradbeer',
-		genre: ['Adventure', 'Drama', 'Crime'],
-		released: 2020,
-		starring: ['Millie Bobby Brown', 'Henry Cavill', 'Sam Claflin', 'Helena Bonham Carter'],
-	},
-	{
-		title: 'Ladies in Black',
-		director: 'Bruce Beresford',
-		genre: ['Comedy', 'Drama', 'Romance'],
-		released: 2018,
-		starring: ['Julia Ormond', 'Angourie Rice', 'Rachael Taylor'],
-	},
-	{
-		title: 'Belle',
-		director: 'Amma Asante',
-		genre: ['Biography', 'Drama', 'Romance'],
-		released: 2013,
-		starring: ['Gugu Mbatha-Raw', 'Matthew Goode', 'Emily Watson'],
-	},
-	{
-		title: 'The Help',
-		director: 'Tate Taylor',
-		genre: ['Drama'],
-		released: 2011,
-		starring: ['Emma Stone', 'Viola Davis', 'Octavia Spencer'],
-	},
-	{
-		title: 'Hidden Figures',
-		director: 'Theodore Melfi',
-		genre: ['Biography', 'Drama', 'History'],
-		released: 2016,
-		starring: ['Taraji P. Henson', 'Octavia Spencer', 'Janelle Monae', 'Kevin Costner', 'Jim Parsons', 'Mahershala Ali'],
-	},
-];
+const Movies = Models.Movie;
+const Users = Models.User;
+
+mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.set('useFindAndModify', false);
+
+const app = express();
 
 //Log requests using Morgan middleware
 app.use(morgan('common'));
+
+app.use(bodyParser.json());
 
 //Requests
 app.get('/', (req, res) => {
 	res.send('Welcome to myFlix!');
 });
 
+//Return all movies
 app.get('/movies', (req, res) => {
-	res.json(movies);
+	Movies.find()
+		.then((movies) => {
+			res.status(201).json(movies);
+		})
+		.catch((err) => {
+			console.error(err);
+			res.status(500).send('Error: ' + err);
+		});
 });
 
-app.get('/movies/:title', (req, res) => {
-	res.send('Successful GET request returning information about a movie based on title.');
+//Return all users
+//For testing, must remove before live
+app.get('/usersList', (req, res) => {
+	Users.find()
+		.then((users) => {
+			res.status(201).json(users);
+		})
+		.catch((err) => {
+			console.error(err);
+			res.status(500).send('Error: ' + err);
+		});
 });
 
-app.get('/movies/genres/:genre', (req, res) => {
-	res.send('Successful GET request returning information about a genre based on genre name.');
+//Return data about movie by title
+app.get('/movies/:Title', (req, res) => {
+	Movies.findOne({ Title: req.params.Title })
+		.then((movie) => {
+			res.json(movie);
+		})
+		.catch((err) => {
+			console.error(err);
+			res.status(500).send('Error: ' + err);
+		});
 });
 
-app.get('/movies/directors/:name', (req, res) => {
-	res.send('Successful GET request returning information about a director based on name.');
+//Return data about genre by genre name
+app.get('/movies/genres/:Name', (req, res) => {
+	Movies.findOne({ 'Genre.Name': req.params.Name })
+		.then((movie) => {
+			res.json(movie.Genre);
+		})
+		.catch((err) => {
+			console.error(err);
+			res.status(500).send('Error: ' + err);
+		});
 });
 
+//Return data about director by director name
+app.get('/movies/directors/:Name', (req, res) => {
+	Movies.findOne({ 'Director.Name': req.params.Name })
+		.then((movie) => {
+			res.json(movie.Director);
+		})
+		.catch((err) => {
+			console.error(err);
+			res.status(500).send('Error: ' + err);
+		});
+});
+
+//Add a new user
 app.post('/users', (req, res) => {
-	res.send('Successful POST request registering a new user.');
+	console.log(req.body);
+	Users.findOne({ Username: req.body.Username })
+		.then((user) => {
+			if (user) {
+				return res.status(400).send(req.body.Username + 'already exists');
+			} else {
+				Users.create({
+					Username: req.body.Username,
+					Password: req.body.Password,
+					Email: req.body.Email,
+					Birthday: req.body.Birthday,
+				})
+					.then((user) => {
+						res.status(201).json(user);
+					})
+					.catch((error) => {
+						console.error(error);
+						res.status(500).send('Error: ' + error);
+					});
+			}
+		})
+		.catch((error) => {
+			console.error(error);
+			res.status(500).send('Error: ' + error);
+		});
 });
 
-app.put('/users/:username', (req, res) => {
-	res.send("Successful PUT request updating a user's information.");
+//Update user information
+app.put('/users/:Username', (req, res) => {
+	Users.findOneAndUpdate(
+		{ Username: req.params.Username },
+		{
+			$set: {
+				Username: req.body.Username,
+				Password: req.body.Password,
+				Email: req.body.Email,
+				Birthday: req.body.Birthday,
+			},
+		},
+		{ new: true }
+	)
+		.then((updatedUser) => {
+			res.status(201).json(updatedUser);
+		})
+		.catch((error) => {
+			console.error(error);
+			res.status(500).send('Error: ' + error);
+		});
 });
 
-app.post('/users/:username/movies/:movieID', (req, res) => {
-	res.send("Successful POST request adding a movie to user's favorites.");
+//Add movie to user's list of favorites
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
+	Users.findOneAndUpdate(
+		{ Username: req.params.Username },
+		{
+			$push: {
+				FavoriteMovies: req.params.MovieID,
+			},
+		},
+		{ new: true }
+	)
+		.then((updatedUser) => {
+			res.status(201).json(updatedUser);
+		})
+		.catch((error) => {
+			console.error(error);
+			res.status(500).send('Error: ' + error);
+		});
 });
 
-app.delete('/users/:username/movies/:movieID', (req, res) => {
-	res.send("Successful DELETE request removing a movie from user's favorites.");
+//Remove movie from user's list of favorites
+app.delete('/users/:Username/movies/:MovieID', (req, res) => {
+	Users.findOneAndUpdate(
+		{ Username: req.params.Username },
+		{
+			$pull: {
+				FavoriteMovies: req.params.MovieID,
+			},
+		},
+		{ new: true }
+	)
+		.then((updatedUser) => {
+			res.status(201).json(updatedUser);
+		})
+		.catch((error) => {
+			console.error(error);
+			res.status(500).send('Error: ' + error);
+		});
 });
 
-app.delete('/users/:username', (req, res) => {
-	res.send('Successful DELETE request deregistering a user.');
+//Remove user
+app.delete('/users/:Username', (req, res) => {
+	Users.findOneAndRemove({ Username: req.params.Username })
+		.then((user) => {
+			if (!user) {
+				res.status(400).send(req.params.Username + ' was not found.');
+			} else {
+				res.status(200).send(req.params.Username + ' was deleted.');
+			}
+		})
+		.catch((error) => {
+			console.error(error);
+			res.status(500).send('Error: ' + error);
+		});
 });
 
 app.use(express.static('public'));
 
 //Error handling
-app.use((err, req, res, next) => {
-	console.error(err.stack);
-	res.status(500).send('Something broke!');
-});
+// app.use((err, req, res, next) => {
+// 	console.error(err.stack);
+// 	res.status(500).send('Something broke!');
+// });
 
 //listen for requests
 app.listen(8080, () => console.log('Your app is listening on port 8080.'));
