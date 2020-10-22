@@ -1,8 +1,8 @@
-const bodyParser = require('body-parser');
 const express = require('express'),
 	morgan = require('morgan'),
 	mongoose = require('mongoose'),
-	Models = require('./models.js');
+	Models = require('./models.js'),
+	bodyParser = require('body-parser');
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -18,7 +18,7 @@ app.use(morgan('common'));
 app.use(bodyParser.json());
 
 //Import auth.js file for login authentication
-let auth = require('./auth.js')(app);
+let auth = require('./auth')(app);
 
 //Require Passport module and import passport.js file
 const passport = require('passport');
@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 });
 
 //Return all movies
-app.get('/movies', (req, res) => {
+app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
 	Movies.find()
 		.then((movies) => {
 			res.status(201).json(movies);
