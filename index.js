@@ -17,6 +17,13 @@ app.use(morgan('common'));
 
 app.use(bodyParser.json());
 
+//Import auth.js file for login authentication
+let auth = require('./auth.js')(app);
+
+//Require Passport module and import passport.js file
+const passport = require('passport');
+require('./passport');
+
 //Requests
 app.get('/', (req, res) => {
 	res.send('Welcome to myFlix!');
