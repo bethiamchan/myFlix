@@ -5,6 +5,8 @@ const express = require('express'),
 	bodyParser = require('body-parser'),
 	cors = require('cors');
 
+const {check, validationResult} = require('express-validator');
+
 const Movies = Models.Movie;
 const Users = Models.User;
 
@@ -94,7 +96,19 @@ app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false
 });
 
 //Add a new user
-app.post('/users', (req, res) => {
+app.post('/users',
+	[
+		check('Username', 'Username must be at least 6 characters long').isLength({min: 6}),
+		check('Username', 'Username contains non alphanumeric characters').isAlphanumeric(),
+		check('Password', 'Password must be at least 6 characters long').isLength({min: 6}),
+		check('Email', 'Email does not appear to be valid').isEmail()
+	], (req, res) => {
+
+		let errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(422).json({errors: errors.array()});
+		}
+
 	let hashedPassword = Users.hashPassword(req.body.Password);
 	Users.findOne({ Username: req.body.Username })
 		.then((user) => {
@@ -123,13 +137,26 @@ app.post('/users', (req, res) => {
 });
 
 //Update user information
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.put('/users/:Username',
+	[
+		check('Username', 'Username must be at least 6 characters long').isLength({min: 6}),
+		check('Username', 'Username contains non alphanumeric characters').isAlphanumeric(),
+		check('Password', 'Password must be at least 6 characters long').isLength({min: 6}),
+		check('Email', 'Email does not appear to be valid').isEmail()
+	], passport.authenticate('jwt', { session: false }), (req, res) => {
+
+		let errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(422).json({errors: errors.array()});
+		}
+
+	let hashedPassword = Users.hashPassword(req.body.Password);
 	Users.findOneAndUpdate(
 		{ Username: req.params.Username },
 		{
 			$set: {
 				Username: req.body.Username,
-				Password: req.body.Password,
+				Password: hashedPassword,
 				Email: req.body.Email,
 				Birthday: req.body.Birthday,
 			},
