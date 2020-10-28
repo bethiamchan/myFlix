@@ -2,7 +2,8 @@ const express = require('express'),
 	morgan = require('morgan'),
 	mongoose = require('mongoose'),
 	Models = require('./models.js'),
-	bodyParser = require('body-parser');
+	bodyParser = require('body-parser'),
+	cors = require('cors');
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -16,6 +17,8 @@ const app = express();
 app.use(morgan('common'));
 
 app.use(bodyParser.json());
+
+app.use(cors());
 
 //Import auth.js file for login authentication
 let auth = require('./auth')(app);
@@ -92,7 +95,7 @@ app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false
 
 //Add a new user
 app.post('/users', (req, res) => {
-	console.log(req.body);
+	let hashedPassword = Users.hashPassword(req.body.Password);
 	Users.findOne({ Username: req.body.Username })
 		.then((user) => {
 			if (user) {
@@ -100,7 +103,7 @@ app.post('/users', (req, res) => {
 			} else {
 				Users.create({
 					Username: req.body.Username,
-					Password: req.body.Password,
+					Password: hashedPassword,
 					Email: req.body.Email,
 					Birthday: req.body.Birthday,
 				})
