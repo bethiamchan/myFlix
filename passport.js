@@ -28,7 +28,7 @@ passport.use(
 
 				if (!user.validatePassword(password)) {
 					console.log('incorrect password');
-					return callback(null, false, {message: 'Incorrect password.'});
+					return callback(null, false, { message: 'Incorrect password.' });
 				}
 
 				console.log('finished');
@@ -42,7 +42,7 @@ passport.use(
 	new JWTStrategy(
 		{
 			jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-			secretOrKey: 'your_jwt_secret'
+			secretOrKey: 'your_jwt_secret',
 		},
 		(jwtPayload, callback) => {
 			return Users.findById(jwtPayload._id)

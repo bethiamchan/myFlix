@@ -5,7 +5,7 @@ const express = require('express'),
 	bodyParser = require('body-parser'),
 	cors = require('cors');
 
-const {check, validationResult} = require('express-validator');
+const { check, validationResult } = require('express-validator');
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -96,18 +96,11 @@ app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false
 });
 
 //Add a new user
-app.post('/users',
-	[
-		check('Username', 'Username must be at least 6 characters long').isLength({min: 6}),
-		check('Username', 'Username contains non alphanumeric characters').isAlphanumeric(),
-		check('Password', 'Password must be at least 6 characters long').isLength({min: 6}),
-		check('Email', 'Email does not appear to be valid').isEmail()
-	], (req, res) => {
-
-		let errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			return res.status(422).json({errors: errors.array()});
-		}
+app.post('/users', [check('Username', 'Username must be at least 6 characters long').isLength({ min: 6 }), check('Username', 'Username contains non alphanumeric characters').isAlphanumeric(), check('Password', 'Password must be at least 6 characters long').isLength({ min: 6 }), check('Email', 'Email does not appear to be valid').isEmail()], (req, res) => {
+	let errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).json({ errors: errors.array() });
+	}
 
 	let hashedPassword = Users.hashPassword(req.body.Password);
 	Users.findOne({ Username: req.body.Username })
@@ -137,18 +130,11 @@ app.post('/users',
 });
 
 //Update user information
-app.put('/users/:Username',
-	[
-		check('Username', 'Username must be at least 6 characters long').isLength({min: 6}),
-		check('Username', 'Username contains non alphanumeric characters').isAlphanumeric(),
-		check('Password', 'Password must be at least 6 characters long').isLength({min: 6}),
-		check('Email', 'Email does not appear to be valid').isEmail()
-	], passport.authenticate('jwt', { session: false }), (req, res) => {
-
-		let errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			return res.status(422).json({errors: errors.array()});
-		}
+app.put('/users/:Username', [check('Username', 'Username must be at least 6 characters long').isLength({ min: 6 }), check('Username', 'Username contains non alphanumeric characters').isAlphanumeric(), check('Password', 'Password must be at least 6 characters long').isLength({ min: 6 }), check('Email', 'Email does not appear to be valid').isEmail()], passport.authenticate('jwt', { session: false }), (req, res) => {
+	let errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(422).json({ errors: errors.array() });
+	}
 
 	let hashedPassword = Users.hashPassword(req.body.Password);
 	Users.findOneAndUpdate(
@@ -237,4 +223,7 @@ app.use(express.static('public'));
 // });
 
 //listen for requests
-app.listen(8080, () => console.log('Your app is listening on port 8080.'));
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+	console.log('Listening on port ' + port);
+});
