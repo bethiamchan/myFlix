@@ -47,18 +47,17 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
 		});
 });
 
-//Return all users
-//For testing, must remove before live
-app.get('/usersList', (req, res) => {
-	Users.find()
-		.then((users) => {
-			res.status(201).json(users);
-		})
-		.catch((err) => {
-			console.error(err);
-			res.status(500).send('Error: ' + err);
-		});
-});
+//Return all users - for testing only
+// app.get('/usersList', (req, res) => {
+// 	Users.find()
+// 		.then((users) => {
+// 			res.status(201).json(users);
+// 		})
+// 		.catch((err) => {
+// 			console.error(err);
+// 			res.status(500).send('Error: ' + err);
+// 		});
+// });
 
 //Return data about movie by title
 app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
