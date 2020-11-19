@@ -95,6 +95,18 @@ app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false
 		});
 });
 
+//Return user details by username
+app.get('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+	Users.findOne({ Username: req.params.Username })
+		.then((user) => {
+			res.json(user);
+		})
+		.catch((err) => {
+			console.error(err);
+			res.status(500).send('Error: ' + err);
+		});
+});
+
 //Add a new user
 app.post('/users', [check('Username', 'Username must be at least 6 characters long').isLength({ min: 6 }), check('Username', 'Username contains non alphanumeric characters').isAlphanumeric(), check('Password', 'Password must be at least 6 characters long').isLength({ min: 6 }), check('Email', 'Email does not appear to be valid').isEmail()], (req, res) => {
 	let errors = validationResult(req);
