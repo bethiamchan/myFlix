@@ -4,203 +4,299 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>myFlix Documentation</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 		<!-- <link href="src/css/style.css" rel="stylesheet" type="text/css" /> -->
 	</head>
 
-	<body>
-		<h1>myFlix Documentation</h1>
-		<p>This app will give user access to information about movies, directors, and genres. Users can sign up, update their information, and create a list of their favorite movies.</p>
+	<body class="mx-auto" style="max-width: 90vw">
+		<br />
+		<h1 class="text-center">myFlix Documentation</h1>
+		<br />
+		<h4 class="text-primary">About</h4>
+		<p>This project is a REST API that interacts with a MongoDB database. It gives users access to information about movies, directors, and genres. Users can sign up, update their information, and create a list of their favorite movies.</p>
+		<br />
 
-		<table>
+		<h4 class="text-primary">Accessing Movie Collection</h4>
+		<table class="table table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th>HTTP Method</th>
+					<th>URL</th>
+					<th>Request</th>
+					<th>Request Body Format</th>
+					<th>Response Body Format</th>
+				</tr>
+			</thead>
 			<tr>
-				<th>Request</th>
-				<th>URL</th>
-				<th>HTTP Method</th>
-				<th>Request Body Format</th>
-				<th>Request Example</th>
-				<th>Response Body Format</th>
-				<th>Response Example</th>
-			</tr>
-			<tr>
+				<td class="font-weight-bold text-success">GET</td>
+				<td>/movies</td>
 				<td>Get a list of all movies</td>
-				<td>/movies</td>
-				<td>GET</td>
 				<td>None</td>
-				<td>/movies</td>
 				<td>JSON object with data about all movies</td>
-				<td>[
-					<br>{
-					<br>"Genre": {
-					<br>"Name": "Adventure",
-					<br>"Description": "Should contain numerous consecutive and inter-related scenes of characters participating in hazardous or exciting experiences for a specific goal. Often include searches or expeditions for lost continents and exotic locales, characters embarking in treasure hunt or heroic journeys, travels, and quests for the unknown."
-					<br>},
-					<br>"Director": {
-					<br>"Name": "John Lasseter",
-					<br>"Bio": "John Alan Lasseter is an American animator, film director, screenwriter, producer, voice actor and former chief creative officer of Walt Disney Animation Studios, Pixar and Disneytoon Studios. He was also the Principal Creative Advisor for Walt Disney Imagineering.",
-					<br>"Birth": "1957"
-					<br>},
-					<br>"_id": "5f88b65284a8c1a9e666a6cf",
-					<br>"Title": "Toy Story",
-					<br>"Description": "A cowboy doll is profoundly threatened and jealous when a new spaceman figure supplants him as top toy in a boy's room.",
-					<br>"ImagePath": "https://m.media-amazon.com/images/M/MV5BMDU2ZWJlMjktMTRhMy00ZTA5LWEzNDgtYmNmZTEwZTViZWJkXkEyXkFqcGdeQXVyNDQ2OTk4MzI@._V1_UX182_CR0,0,182,268_AL_.jpg",
-					<br>"Featured": true,
-					<br>},
-					<br>...
-					<br>]
-				</td>
 			</tr>
 			<tr>
-				<td>Get data about a single movie by title</td>
+				<td class="font-weight-bold text-success">GET</td>
 				<td>/movies/:Title</td>
-				<td>GET</td>
+				<td>Get data about a single movie by title</td>
 				<td>None</td>
-				<td>/movies/Mulan</td>
 				<td>JSON object with data about a single movie</td>
-				<td>{
-					<br>"Genre": {
-					<br>"Name": "Adventure",
-					<br>"Description": "Should contain numerous consecutive and inter-related scenes of characters participating in hazardous or exciting experiences for a specific goal. Often include searches or expeditions for lost continents and exotic locales, characters embarking in treasure hunt or heroic journeys, travels, and quests for the unknown."
-					<br>},
-					<br>"Director": {
-					<br>"Name": "Tony Bancroft",
-					<br>"Bio": "Tony Bancroft is an American animator and film director who frequently collaborates with Disney.",
-					<br>"Birth": "1967"
-					<br>},
-					<br>"_id": "5f88b65284a8c1a9e666a6d3",
-					<br>"Title": "Mulan",
-					<br>"Description": "To save her father from death in the army, a young maiden secretly goes in his place and becomes one of China's greatest heroines in the process.",
-					<br>"ImagePath": "https://m.media-amazon.com/images/M/MV5BODkxNGQ1NWYtNzg0Ny00Yjg3LThmZTItMjE2YjhmZTQ0ODY5XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg",
-					<br>"Featured": treasure
-					<br>}
-				</td>
 			</tr>
 			<tr>
-				<td>Get data about a genre by genre name</td>
+				<td class="font-weight-bold text-success">GET</td>
 				<td>/movies/genres/:Genre</td>
-				<td>GET</td>
+				<td>Get data about a genre by genre name</td>
 				<td>None</td>
-				<td>/movies/genres/Comedy</td>
 				<td>JSON object with data about a single genre</td>
-				<td>{
-					<br>"Name": "Comedy",
-					<br>"Description": "Virtually all scenes should contain characters participating in humorous or comedic experiences. The comedy can be exclusively for the viewer, at the expense of the characters in the title, or be shared with them."
-					<br>}
-				</td>
 			</tr>
 			<tr>
-				<td>Get data about a director by name</td>
+				<td class="font-weight-bold text-success">GET</td>
 				<td>/movies/directors/:Name</td>
-				<td>GET</td>
+				<td>Get data about a director by name</td>
 				<td>None</td>
-				<td>/movies/directors/Nancy%20Meyers</td>
 				<td>JSON object with data about a single director</td>
-				<td>{
-					<br>"Name": "Nancy Meyers",
-					<br>"Bio": "Nancy Jane Meyers is an American filmmaker. She is known as the writer, producer, and director of numerous critically and commercially successful romantic comedy films.",
-					<br>"Birth": "1949"
-					<br>}
-				</td>
 			</tr>
+		</table>
+		<br />
+
+		<h4 class="text-primary">Accessing User Collection</h4>
+		<table class="table table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th>HTTP Method</th>
+					<th>URL</th>
+					<th>Request</th>
+					<th>Request Body Format</th>
+					<th>Response Body Format</th>
+				</tr>
+			</thead>
 			<tr>
-				<td>Register as new user</td>
+				<td class="font-weight-bold text-warning">POST</td>
 				<td>/users</td>
-				<td>POST</td>
+				<td>Register as new user</td>
 				<td>JSON object with new user details</td>
-				<td>{
-					<br>"Username": "SimonC",
-					<br>"Password": "TNsE4n",
-					<br>"Email": "simon@sample.com",
-					<br>"Birthday": "1980-03-22",
-					<br>}
-				</td>
 				<td>JSON object with data about added user</td>
-				<td>{
-					<br>"FavoriteMovies": [],
-					<br>"_id": "5f8f2aa856752b2a284e2587",
-					<br>"Username": "SimonC",
-					<br>"Password": "TNsE4n",
-					<br>"Email": "simon@sample.com",
-					<br>"Birthday": "1980-03-22T06:00:00.000Z",
-					<br>}
-				</td>
 			</tr>
 			<tr>
+				<td class="font-weight-bold text-primary">PUT</td>
+				<td>/users/:Username</td>
 				<td>User updates their user information</td>
-				<td>/users/:Username</td>
-				<td>PUT</td>
 				<td>JSON object with updated user details</td>
-				<td>{
-					<br>"Username": "CamillaL",
-					<br>"Password": "u6pRbJ",
-					<br>"Email": "camilla@sample.com",
-					<br>"Birthday": "2001-10-12"
-					<br>}
-				</td>
 				<td>JSON object with data about updated user</td>
-				<td>{
-					<br>"FavoriteMovies": ["5f88b65284a8c1a9e666a6d3"],
-					<br>"_id": "5f88b80584a8c1a9e666a6da",
-					<br>"Username": "CamillaL",
-					<br>"Password": "u6pRbJ",
-					<br>"Email": "camilla@sample.com",
-					<br>"Birthday": "2001-10-12T00:00:00.000Z"
-					<br>}
-				</td>
 			</tr>
 			<tr>
+				<td class="font-weight-bold text-warning">POST</td>
+				<td>/users/:Username/movies/:MovieID</td>
 				<td>User adds movie to list of favorites</td>
-				<td>/users/:Username/movies/:MovieID</td>
-				<td>POST</td>
 				<td>None</td>
-				<td>/users/AndersonK/movies/5f88b65784a8c1a9e666a6d8</td>
 				<td>JSON object with user data including movie ID that was added to favorites</td>
-				<td>{
-					<br>"FavoriteMovies": [
-					<br>"5f88b65284a8c1a9e666a6cf",
-					<br>"5f88b65284a8c1a9e666a6d2",
-					<br>"5f88b65784a8c1a9e666a6d8"
-					<br>],
-					<br>"_id": "5f88b80584a8c1a9e666a6db",
-					<br>"Username": "AndersonK",
-					<br>"Password": "JUrQZa",
-					<br>"Email": "anderson@sample.com",
-					<br>"Birthday": "1995-06-27T00:00:00.000Z"
-					<br>}
-				</td>
 			</tr>
 			<tr>
-				<td>User removes movie from list of favorites</td>
+				<td class="font-weight-bold text-danger">DELETE</td>
 				<td>/users/:Username/movies/:MovieID</td>
-				<td>DELETE</td>
+				<td>User removes movie from list of favorites</td>
 				<td>None</td>
-				<td>/users/AndersonK/movies/5f88b65784a8c1a9e666a6d8</td>
 				<td>JSON object with user data showing movie ID that was removed from favorites has been removed</td>
-				<td>{
-					<br>"FavoriteMovies": [
-					<br>"5f88b65284a8c1a9e666a6cf",
-					<br>"5f88b65284a8c1a9e666a6d2",
-					<br>],
-					<br>"_id": "5f88b80584a8c1a9e666a6db",
-					<br>"Username": "AndersonK",
-					<br>"Password": "JUrQZa",
-					<br>"Email": "anderson@sample.com",
-					<br>"Birthday": "1995-06-27T00:00:00.000Z"
-					<br>}
-				</td>
 			</tr>
 			<tr>
-				<td>Existing user deregisters</td>
+				<td class="font-weight-bold text-danger">DELETE</td>
 				<td>/users/:Username</td>
-				<td>DELETE</td>
+				<td>Existing user deregisters</td>
 				<td>None</td>
-				<td>/users/SimonC</td>
 				<td>Message indicating account has been deleted or was not found</td>
-				<td>"SimonC was deleted."</td>
 			</tr>
 		</table>
 
-		<br>
-		<p>Note: Use %20 for spaces in the URL</p>
+		<br />
+		<h4 class="text-primary">Sample Requests and Responses</h4>
+		<p class="text-muted">Note: Use %20 for spaces in the URL</p>
+		<div class="card mb-4">
+			<div class="row no-gutters">
+				<div class="col-md-4">
+					<div class="card-body">
+						<h5 class="card-text"><span class="font-weight-bold text-success">GET</span> request for all movies</h5>
+						<br />
+						<h6 class="card-text">Sample Request:</h6>
+						<p class="card-text text-success">/movies</p>
+						<br />
+						<h6 class="card-text">Sample Response:</h6>
+						<p class="card-text">
+							[ <br />{ <br />"Genre": { <br />"Name": "Adventure", <br />"Description": "Should contain numerous consecutive and inter-related scenes of characters participating in hazardous or exciting experiences for a specific goal. Often include searches or expeditions for lost continents and exotic locales, characters embarking in treasure hunt or heroic journeys, travels, and quests for the unknown." <br />}, <br />"Director": { <br />"Name": "John Lasseter", <br />"Bio": "John Alan Lasseter is an American animator, film director, screenwriter, producer, voice actor and former chief creative officer of Walt Disney Animation Studios, Pixar and Disneytoon Studios. He was also the Principal Creative Advisor for Walt Disney Imagineering.", <br />"Birth": "1957" <br />}, <br />"_id": "5f88b65284a8c1a9e666a6cf", <br />"Title": "Toy Story", <br />"Description": "A cowboy doll is profoundly threatened and jealous when a new spaceman figure supplants him as top toy in a
+							boy's room.", <br />"ImagePath": "https://m.media-amazon.com/images/M/MV5BMDU2ZWJlMjktMTRhMy00ZTA5LWEzNDgtYmNmZTEwZTViZWJkXkEyXkFqcGdeQXVyNDQ2OTk4MzI@._V1_UX182_CR0,0,182,268_AL_.jpg", <br />"Featured": true, <br />}, <br />... <br />]
+						</p>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<br />
+					<img class="card-img" src="assets/AllMovies.png" alt="Get all movies request and response sample" />
+				</div>
+			</div>
+		</div>
 
+		<div class="card mb-4">
+			<div class="row no-gutters">
+				<div class="col-md-4">
+					<div class="card-body">
+						<h5 class="card-text"><span class="font-weight-bold text-success">GET</span> request for a single movie by title</h5>
+						<br />
+						<h6 class="card-text">Sample Request:</h6>
+						<p class="card-text text-success">/movies/Mulan</p>
+						<br />
+						<h6 class="card-text">Sample Response:</h6>
+						<p class="card-text">
+							{ <br />"Genre": { <br />"Name": "Adventure", <br />"Description": "Should contain numerous consecutive and inter-related scenes of characters participating in hazardous or exciting experiences for a specific goal. Often include searches or expeditions for lost continents and exotic locales, characters embarking in treasure hunt or heroic journeys, travels, and quests for the unknown." <br />}, <br />"Director": { <br />"Name": "Tony Bancroft", <br />"Bio": "Tony Bancroft is an American animator and film director who frequently collaborates with Disney.", <br />"Birth": "1967" <br />}, <br />"_id": "5f88b65284a8c1a9e666a6d3", <br />"Title": "Mulan", <br />"Description": "To save her father from death in the army, a young maiden secretly goes in his place and becomes one of China's greatest heroines in the process.", <br />"ImagePath":
+							"https://m.media-amazon.com/images/M/MV5BODkxNGQ1NWYtNzg0Ny00Yjg3LThmZTItMjE2YjhmZTQ0ODY5XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg", <br />"Featured": treasure <br />}
+						</p>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<br />
+					<img class="card-img" src="assets/MovieByTitle.png" alt="Get one movie by title request and response sample" />
+				</div>
+			</div>
+		</div>
+
+		<div class="card mb-4">
+			<div class="row no-gutters">
+				<div class="col-md-4">
+					<div class="card-body">
+						<h5 class="card-text"><span class="font-weight-bold text-success">GET</span> request for a genre by the genre name</h5>
+						<br />
+						<h6 class="card-text">Sample Request:</h6>
+						<p class="card-text text-success">/movies/genres/Comedy</p>
+						<br />
+						<h6 class="card-text">Sample Response:</h6>
+						<p class="card-text">{ <br />"Name": "Comedy", <br />"Description": "Virtually all scenes should contain characters participating in humorous or comedic experiences. The comedy can be exclusively for the viewer, at the expense of the characters in the title, or be shared with them." <br />}</p>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<br />
+					<img class="card-img" src="assets/GenreByName.png" alt="Get details about a genre by genre name request and response sample" />
+				</div>
+			</div>
+		</div>
+
+		<div class="card mb-4">
+			<div class="row no-gutters">
+				<div class="col-md-4">
+					<div class="card-body">
+						<h5 class="card-text"><span class="font-weight-bold text-success">GET</span> request for a director by the director name</h5>
+						<br />
+						<h6 class="card-text">Sample Request:</h6>
+						<p class="card-text text-success">/movies/directors/Nancy%20Meyers</p>
+						<br />
+						<h6 class="card-text">Sample Response:</h6>
+						<p class="card-text">{ <br />"Name": "Nancy Meyers", <br />"Bio": "Nancy Jane Meyers is an American filmmaker. She is known as the writer, producer, and director of numerous critically and commercially successful romantic comedy films.", <br />"Birth": "1949" <br />}</p>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<br />
+					<img class="card-img" src="assets/DirectorByName.png" alt="Get details about a director by director name request and response sample" />
+				</div>
+			</div>
+		</div>
+
+		<div class="card mb-4">
+			<div class="row no-gutters">
+				<div class="col-md-4">
+					<div class="card-body">
+						<h5 class="card-text"><span class="font-weight-bold text-warning">POST</span> request to register a new user</h5>
+						<br />
+						<h6 class="card-text">Sample Request:</h6>
+						<p class="card-text">{ <br />"Username": "SimonC", <br />"Password": "TNsE4n", <br />"Email": "simon@sample.com", <br />"Birthday": "1980-03-22", <br />}</p>
+						<br />
+						<h6 class="card-text">Sample Response:</h6>
+						<p class="card-text">{ <br />"FavoriteMovies": [], <br />"_id": "5f8f2aa856752b2a284e2587", <br />"Username": "SimonC", <br />"Password": "TNsE4n", <br />"Email": "simon@sample.com", <br />"Birthday": "1980-03-22T06:00:00.000Z", <br />}</p>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<br />
+					<img class="card-img" src="assets/NewUser.png" alt="Add a new user request and response sample" />
+				</div>
+			</div>
+		</div>
+
+		<div class="card mb-4">
+			<div class="row no-gutters">
+				<div class="col-md-4">
+					<div class="card-body">
+						<h5 class="card-text"><span class="font-weight-bold text-primary">PUT</span> request to update a user's information</h5>
+						<br />
+						<h6 class="card-text">Sample Request:</h6>
+						<p class="card-text">{ <br />"Username": "CamillaL", <br />"Password": "u6pRbJ", <br />"Email": "camilla@sample.com", <br />"Birthday": "2001-10-12" <br />}</p>
+						<br />
+						<h6 class="card-text">Sample Response:</h6>
+						<p class="card-text">{ <br />"FavoriteMovies": ["5f88b65284a8c1a9e666a6d3"], <br />"_id": "5f88b80584a8c1a9e666a6da", <br />"Username": "CamillaL", <br />"Password": "u6pRbJ", <br />"Email": "camilla@sample.com", <br />"Birthday": "2001-10-12T00:00:00.000Z" <br />}</p>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<br />
+					<img class="card-img" src="assets/UpdateUser.png" alt="Change a user's information request and response sample" />
+				</div>
+			</div>
+		</div>
+
+		<div class="card mb-4">
+			<div class="row no-gutters">
+				<div class="col-md-4">
+					<div class="card-body">
+						<h5 class="card-text"><span class="font-weight-bold text-warning">POST</span> request to add a movie to user's list of favorites</h5>
+						<br />
+						<h6 class="card-text">Sample Request:</h6>
+						<p class="card-text text-warning">/users/AndersonK/movies/5f88b65784a8c1a9e666a6d8</p>
+						<br />
+						<h6 class="card-text">Sample Response:</h6>
+						<p class="card-text">{ <br />"FavoriteMovies": [ <br />"5f88b65284a8c1a9e666a6cf", <br />"5f88b65284a8c1a9e666a6d2", <br />"5f88b65784a8c1a9e666a6d8" <br />], <br />"_id": "5f88b80584a8c1a9e666a6db", <br />"Username": "AndersonK", <br />"Password": "JUrQZa", <br />"Email": "anderson@sample.com", <br />"Birthday": "1995-06-27T00:00:00.000Z" <br />}</p>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<br />
+					<img class="card-img" src="assets/AddMovieToFavorites.png" alt="Add a movie to favorites request and response sample" />
+				</div>
+			</div>
+		</div>
+
+		<div class="card mb-4">
+			<div class="row no-gutters">
+				<div class="col-md-4">
+					<div class="card-body">
+						<h5 class="card-text"><span class="font-weight-bold text-danger">DELETE</span> request to remove a movie from user's list of favorites</h5>
+						<br />
+						<h6 class="card-text">Sample Request:</h6>
+						<p class="card-text text-danger">/users/AndersonK/movies/5f88b65784a8c1a9e666a6d8</p>
+						<br />
+						<h6 class="card-text">Sample Response:</h6>
+						<p class="card-text">{ <br />"FavoriteMovies": [ <br />"5f88b65284a8c1a9e666a6cf", <br />"5f88b65284a8c1a9e666a6d2", <br />], <br />"_id": "5f88b80584a8c1a9e666a6db", <br />"Username": "AndersonK", <br />"Password": "JUrQZa", <br />"Email": "anderson@sample.com", <br />"Birthday": "1995-06-27T00:00:00.000Z" <br />}</p>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<br />
+					<img class="card-img" src="assets/RemoveMovieFromFavorites.png" alt="Remove a movie from favorites request and response sample" />
+				</div>
+			</div>
+		</div>
+
+		<div class="card mb-4">
+			<div class="row no-gutters">
+				<div class="col-md-4">
+					<div class="card-body">
+						<h5 class="card-text"><span class="font-weight-bold text-danger">DELETE</span> request to delete user's account</h5>
+						<br />
+						<h6 class="card-text">Sample Request:</h6>
+						<p class="card-text text-danger">/users/SimonC</p>
+						<br />
+						<h6 class="card-text">Sample Response:</h6>
+						<p class="card-text">"SimonC was deleted."</p>
+					</div>
+				</div>
+				<div class="col-md-8">
+					<br />
+					<img class="card-img" src="assets/DeleteUser.png" alt="Delete user's account request and response sample" />
+				</div>
+			</div>
+		</div>
+
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	</body>
 </html>

@@ -2,8 +2,12 @@
 This project is a REST API that interacts with a MongoDB database. It is used in other projects to provide movie information and allow users to create accounts and save their favorite movies.
 
 
+# Documentation
+## [Read more about the API endpoints here.](https://bchanmyflix.herokuapp.com/documentation.html)
+![Screen recording of project documentation](public/assets/myFlixAPIDemo.gif)
+
+
 # Features
-### [Read more about the API endpoints here.](https://bchanmyflix.herokuapp.com/documentation.html)
 * Endpoints
   * return a list of all movies,
   * return information about a single movie by its title,
