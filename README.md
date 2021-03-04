@@ -3,7 +3,7 @@ This project is a REST API that interacts with a MongoDB database. It is used in
 
 
 # Documentation
-## [Read more about the API endpoints here.](https://bchanmyflix.herokuapp.com/documentation.html)
+### [Read more about the API endpoints here.](https://bchanmyflix.herokuapp.com/documentation.html)
 ![Screen recording of project documentation](public/assets/myFlixAPIDemo.gif)
 
 
